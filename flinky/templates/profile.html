@@ -1,12 +1,9 @@
-<!doctype html>
-<html>
-<head>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} {{ user.username }} profile {% endblock %}
+{% block content %}
 <h1>{{user.username}}'s profile</h1>
 <span>Username : {{ user.username }}</span><br>
 <span>Email : {{ user.email }}</span><br>
 <span>Joined : {{ joined }} ago</span><br>
 <span><a href="/profile/edit/{{ user.username }}">Edit profile</a></span>
-</body>
-</html>
+{% endblock %}

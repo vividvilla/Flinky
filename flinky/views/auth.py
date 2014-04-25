@@ -4,7 +4,7 @@ from ..forms import LoginForm, SignupForm
 from ..models import db, User
 from ..utils import valid_password
 
-@app.route('/login', methods = ('GET', 'POST'))
+@app.route('/login/', methods = ('GET', 'POST'))
 @user_loggedin
 def login():
 	form = LoginForm()
@@ -19,7 +19,7 @@ def login():
 				return redirect('/')
 	return render_template('login.html', form = form)
 
-@app.route('/signup', methods = ('GET','POST'))
+@app.route('/signup/', methods = ('GET','POST'))
 @user_loggedin
 def signup():
 	form = SignupForm()
@@ -34,7 +34,7 @@ def signup():
 		return "Hello {}".format(new_user.username)
 	return render_template('signup.html', form = form)
 
-@app.route('/logout')
+@app.route('/logout/')
 @requires_login
 def logout():
     if session.get('logged_in'):

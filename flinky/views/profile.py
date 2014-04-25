@@ -22,13 +22,16 @@ def calc_joined(joined_date):
 	else:
 		return "{} seconds".format(seconds)
 
-@app.route('/profile/<username>')
+@app.route('/profile/')
+@app.route('/profile/<username>/')
 @requires_login
-def profile(username):
-	user = User.query.filter_by(username = username).first()
-	return render_template('profile.html', user = user, joined = calc_joined(user.joined))
+def profile(username = None):
+	if username:
+		user = User.query.filter_by(username = username).first()
+		return render_template('profile.html', user = user, joined = calc_joined(user.joined))
+	return redirect('/')
 
-@app.route('/profile/edit/<username>', methods = ['GET', 'POST'])
+@app.route('/profile/edit/<username>/', methods = ['GET', 'POST'])
 @requires_login
 def profile_edit(username):
 	form = ProfileForm()

@@ -12,7 +12,7 @@ def requires_login(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get('logged_in'):
-            return redirect(url_for('login', next=request.url))
+            return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -20,7 +20,7 @@ def user_loggedin(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get('logged_in'):
-            return redirect(url_for('profile', username = session['logged_in'], next=request.url))
+            return redirect(url_for('profile', username = session['logged_in']))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -28,6 +28,6 @@ def user_loggedin(f):
 @requires_login
 @user_loggedin
 def index():
-    return "Hello there !!!"
+    return None
 
 import flinky.views

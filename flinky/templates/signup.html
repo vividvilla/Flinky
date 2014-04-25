@@ -1,8 +1,6 @@
-<!doctype html>
-<html>
-<head>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} Signup {% endblock %}
+{% block content %}
 <h1>Signup</h1>
 <form method="POST" action="{{ url_for('signup') }}">
     {{ form.csrf_token }} 
@@ -12,5 +10,4 @@
     {{ form.email.label }} : {{ form.email }}  <span class="error">{{ form.email.errors[0] }}</span><br>
     <input type="submit" value="Submit">
 </form>
-</body>
-</html>
+{% endblock %}
