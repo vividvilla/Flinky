@@ -5,6 +5,8 @@ from datetime import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
 from wtforms.validators import ValidationError
 
+from flask import session
+
 db = SQLAlchemy(app)
 
 class User(db.Model):

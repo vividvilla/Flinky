@@ -9,13 +9,13 @@ from ..utils import valid_password
 def login():
 	form = LoginForm()
 	if form.validate_on_submit():
-		password = request.form['password']
-		username = request.form['username']
+		password = form.password.data
+		username = form.username.data
 		user = User.query.filter_by(username = username).first()
 		if user:
 			if valid_password(password, user.password):
 				session['logged_in'] = user.username
-				session.permanent = request.form['remember']
+				session.permanent = form.remember.data
 				return redirect('/')
 	return render_template('login.html', form = form)
 
@@ -24,9 +24,9 @@ def login():
 def signup():
 	form = SignupForm()
 	if form.validate_on_submit():
-		username = request.form['username']
-		password = request.form['password']
-		email = request.form['email']
+		username = form.username.data
+		password = form.password.data
+		email = form.email.data
 		new_user = User(username, password, email)
 		db.session.add(new_user)
 		db.session.commit()
@@ -40,8 +40,3 @@ def logout():
     if session.get('logged_in'):
         session.pop('logged_in', None)
     return redirect('/')
-
-@app.route('/profile/<username>')
-@requires_login
-def profile(username):
-	return "Hello {}".format(username)    

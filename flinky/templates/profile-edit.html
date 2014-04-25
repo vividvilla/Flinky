@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+<h1>Edit profile</h1>
+<form method="POST" action="{{ url_for( 'profile_edit', username = user.username ) }}">
+    {{ form.csrf_token }} 
+    {{ form.password.label }} : {{ form.password }}  <span class="error">{{ form.password.errors[0] }}</span><br>
+    {{ form.confirm.label }} : {{ form.confirm }}  <span class="error">{{ form.confirm.errors[0] }}</span><br>
+    {{ form.email.label }} : {{ form.email }}  <span class="error">{{ form.email.errors[0] }}</span><br>
+    <input type="submit" value="Submit">
+</body>
+</html>
