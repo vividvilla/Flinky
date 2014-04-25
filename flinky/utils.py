@@ -15,7 +15,7 @@ def make_pw_hash(pw, name=SECRET, salt=""):
     h = hashlib.sha256(name + pw + salt).hexdigest()
     return '%s|%s' % (h, salt)
 
-def valid_pw(pw, h, name=SECRET):
+def valid_password(pw, h, name=SECRET):
     salt = h.split('|')[1]
     if make_pw_hash(pw, name, salt) == h:
         return True

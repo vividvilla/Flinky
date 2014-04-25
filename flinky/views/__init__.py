@@ -1,1 +1,1 @@
-import flink.views.auth
+import flinky.views.auth

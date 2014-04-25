@@ -1,32 +1,27 @@
-from flinky import db
+from flinky import app
 from urlparse import urlparse
 from utils import make_pw_hash
+from datetime import datetime
+from flask.ext.sqlalchemy import SQLAlchemy
+from wtforms.validators import ValidationError
+
+db = SQLAlchemy(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(80), unique = True)
     email = db.Column(db.String(80), unique = True)
     password = db.Column(db.Text)
+    joined = db.Column(db.DateTime())
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, password, email, joined = datetime.now()):
         self.username = username
         self.email = email
         self.password = make_pw_hash(password)
+        self.joined = joined
 
     def __repr__(self):
         return '<User %r>' % self.username
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return unicode(self.id)        
 
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -46,3 +41,13 @@ class Link(db.Model):
 
     def __repr__(self):
         return '<Link %r>' % self.link
+
+def user_validation(form, field):
+    user = User.query.filter_by(username = field.data).first()
+    if user:
+        raise ValidationError('User already exists')
+
+def email_validation(form, field):
+    email = User.query.filter_by(email = field.data).first()
+    if email:
+        raise ValidationError('Emailid already registered')
