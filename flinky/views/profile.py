@@ -1,5 +1,5 @@
 from flinky import app, user_loggedin, requires_login
-from flask import render_template, session, url_for, redirect, request
+from flask import render_template, session, url_for, redirect, request, flash
 from ..forms import ProfileForm
 from ..models import db, User
 from datetime import datetime
@@ -46,5 +46,6 @@ def profile_edit(username):
 			user.email = email
 
 		db.session.commit()
+		flash("Successfully modifed the profile", category = 'success')
 		return redirect(url_for('profile', username = username))
 	return render_template('profile-edit.html', user = user, form = form)

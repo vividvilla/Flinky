@@ -2,10 +2,49 @@
 {% block title %} Edit {{ user.username }} profile {% endblock %}
 {% block content %}
 <h1>Edit profile</h1>
+<div class="ui form segment signup">
 <form method="POST" action="{{ url_for( 'profile_edit', username = user.username ) }}">
     {{ form.csrf_token }} 
-    {{ form.password.label }} : {{ form.password }}  <span class="error">{{ form.password.errors[0] }}</span><br>
-    {{ form.confirm.label }} : {{ form.confirm }}  <span class="error">{{ form.confirm.errors[0] }}</span><br>
-    {{ form.email.label }} : {{ form.email }}  <span class="error">{{ form.email.errors[0] }}</span><br>
-    <input type="submit" value="Submit">
+		<div class="field">
+			<label>{{ form.password.label }}</label>
+			<div class="ui left labeled icon input">
+				{{ form.password }}
+				<i class="lock icon"></i>
+				<div class="ui corner label">
+					<i class="icon asterisk"></i>
+				</div>
+			</div>
+			{% if form.password.errors %}
+			<div class="ui red message">{{ form.password.errors[0] }}</div>
+			{% endif %}
+		</div>
+		<div class="field">
+			<label>{{ form.confirm.label }}</label>
+			<div class="ui left labeled icon input">
+				{{ form.confirm }}
+				<i class="lock icon"></i>
+				<div class="ui corner label">
+					<i class="icon asterisk"></i>
+				</div>
+			</div>
+		    {% if form.confirm.errors %}
+			<div class="ui red message">{{ form.confirm.errors[0] }}</div>
+			{% endif %}
+		</div>
+		<div class="field">
+			<label>{{ form.email.label }}</label>
+			<div class="ui left labeled icon input">
+				{{ form.email }}
+				<i class="mail icon"></i>
+				<div class="ui corner label">
+					<i class="icon asterisk"></i>
+				</div>
+			</div>
+		    {% if form.email.errors %}
+			<div class="ui red message">{{ form.email.errors[0] }}</div>
+			{% endif %}
+		</div>
+    <input type="submit" value="Submit" class="ui blue submit button">
+</form>
+<div>
 {% endblock %}

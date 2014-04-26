@@ -1,5 +1,5 @@
 from flinky import app, user_loggedin, requires_login
-from flask import render_template, session, url_for, redirect, request
+from flask import render_template, session, url_for, redirect, request, flash
 from ..forms import LoginForm, SignupForm
 from ..models import db, User
 from ..utils import valid_password
@@ -16,6 +16,7 @@ def login():
 			if valid_password(password, user.password):
 				session['logged_in'] = user.username
 				session.permanent = form.remember.data
+				flash('You are loggedin', category = "success")
 				return redirect('/')
 	return render_template('login.html', form = form)
 
@@ -31,7 +32,8 @@ def signup():
 		db.session.add(new_user)
 		db.session.commit()
 		session['logged_in'] = new_user.username
-		return "Hello {}".format(new_user.username)
+		flash('You are successfully registered', category = "success")
+		return redirect('/profile')
 	return render_template('signup.html', form = form)
 
 @app.route('/logout/')
@@ -39,4 +41,5 @@ def signup():
 def logout():
     if session.get('logged_in'):
         session.pop('logged_in', None)
+    flash('You are logged out', category = "success")
     return redirect('/')

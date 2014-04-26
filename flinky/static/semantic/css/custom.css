@@ -1,3 +1,68 @@
+/*******************************
+            Global
+*******************************/
+
+html,
+body {
+  font-size: 15px;
+  height: 100%;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #FFFFFF;
+  margin: 0px;
+  padding: 0px;
+  color: #555555;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+}
+
+/*******************************
+          UI Overrides
+*******************************/
+
+.ui.header {
+  font-family: 'Source Sans Pro', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.ui.header,
+h1,
+h2 {
+  font-weight: normal !important;
+}
+
+h1.ui.header {
+  font-size: 3em;
+}
+
+h4.ui.header,
+h5.ui.header,
+.ui.icon.header {
+  font-weight: bold !important;
+}
+
+.ui.button {
+  font-weight: normal;
+  text-decoration: none;
+}
+
+a {
+  color: #009FDA;
+  text-decoration: none;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #00BAFF;
+}
+
+p a {
+  font-weight: bold;
+}
+
 .wrap {
 	max-width: 800px;
 	margin: 0 auto;
@@ -11,4 +76,44 @@ nav ul {
 
 nav ul li {
 	display: inline-block;
+}
+
+header {
+	border-bottom: 1px solid #e5e5e5;
+	height: 80px;
+}
+
+header a {
+	text-transform: uppercase;
+}
+
+.header-title h1 {
+	font-size: 26px;
+	font-weight: 700 !important;
+	padding: 5px 0;
+}
+
+.ui.secondary.pointing.menu.topmenu {
+	border: 0;
+	padding: 23px 0;
+}
+
+.ui.grid.header-form,
+.ui.grid.header-form > .column,
+.ui.grid.header-form h4,
+.ui.grid.header-form h2,
+header .ui.grid > .column,
+header .ui.grid {
+	margin: 0;
+	padding: 0;
+}
+
+.flash {text-align: center;}
+
+.remember {
+	padding: 10px 0;
+}
+
+.social-register {
+	font-weight: 700 !important;
 }

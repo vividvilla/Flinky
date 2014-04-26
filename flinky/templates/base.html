@@ -13,7 +13,9 @@
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='semantic/css/semantic.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='semantic/css/custom.css') }}">
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
 
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
   <script src="{{ url_for('static', filename='semantic/javascript/semantic.js') }}"></script>
   <script src="{{ url_for('static', filename='semantic/javascript/custom.js') }}"></script>
   {% block head %}{% endblock %}
@@ -23,10 +25,10 @@
 	<header>
 		<div class="ui grid">
 			<div class="left floated four wide column">
-				<div class="header-title"><h1>Flinky</h1></div>
+				<div class="header-title"><h1><a href="/">Flinky</a></h1></div>
 			</div>
 			<div class="right floated ten wide column">
-				<div class="ui secondary pointing menu">
+				<div class="ui secondary pointing menu topmenu">
 					 <div class="right menu">
 						<a class="item" href="/"><i class="home icon"></i> Home</a>
 						<a class="item" href="#"><i class="add sign box icon"></i>Submit</a>
@@ -42,6 +44,17 @@
 			</div>
 		</div>
 	</header>
+	{% with messages = get_flashed_messages(with_categories=true) %}
+	  {% if messages %}
+	    <div flashclass="row flashes">
+	        {% for category, message in messages %}
+	        <div class="ui message {{category}} ">
+	            {{ message }}
+	        </div>
+	    {% endfor %}
+	    </div>
+	  {% endif %}
+	{% endwith %}
 	{% block content %}
 	{% endblock %}
 	</div>

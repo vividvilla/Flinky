@@ -1,4 +1,4 @@
-from flask import Flask, session, redirect, url_for, request
+from flask import Flask, session, redirect, url_for, request, flash
 from functools import wraps
 
 app = Flask(__name__)
@@ -12,6 +12,7 @@ def requires_login(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get('logged_in'):
+            flash("You need to either login or signup to access this page", category = "error")
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function

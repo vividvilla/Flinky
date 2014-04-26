@@ -1,15 +1,59 @@
 {% extends 'base.html' %}
 {% block title %} Login {% endblock %}
 {% block content %}
-<h1>Login</h1>
+<h2>Login</h2>
+<div class="ui two column middle aligned relaxed grid basic segment">
+<div class="column">
+<div class="ui form segment login">
 <form method="POST" action="{{ url_for('login') }}">
-    {{ form.csrf_token }} 
-    {{ form.username.label }} : {{ form.username(size=20) }}<br>
-    {{ form.password.label }} : {{ form.password }}<br>
-    {{ form.remember }} Remember Me
-    <input type="submit" value="Submit">
+    {{ form.csrf_token }}
+    <div class="field">
+    	<label></label>{{ form.username.label }}</label>
+    	<div class="ui left labeled icon input">
+    		{{ form.username(size=20) }}
+    		<i class="user icon"></i>
+    		<div class="ui corner label">
+    			<i class="icon asterisk"></i>
+    		</div>
+    	</div>
+    </div>
+    <div class="field">
+    	<label>{{ form.password.label }}</label>
+    	<div class="ui left labeled icon input">
+    		{{ form.password() }}
+    		<i class="lock icon"></i>
+    		<div class="ui corner label">
+    			<i class="icon asterisk"></i>
+    		</div>
+    	</div>
+    </div>
+    <div class="ui grid">
+	    <div class="left floated eleven wide column">
+		    <div class="inline field remember">
+		    	<div class="ui checkbox">
+		    		{{ form.remember }}
+		    		<label for="remember">Remember Me</label>
+		    	</div>
+		    </div>
+		</div>
+		<div class="right floated five wide column">
+	    	<input type="submit" value="Submit" class="ui blue submit button">
+	    </div>
+	</div>
     {% if form.username.errors or form.password.errors %}
-        <div class="errors">Invalid login details</div>
+        <div class="ui red message">Invalid login details</div>
     {% endif %}
 </form>
+</div>
+</div>
+<div class="ui vertical divider">
+    Or
+  </div>
+  <div class="center aligned column">
+    <a class="huge green ui labeled icon button" href="{{ url_for('signup') }}">
+      <i class="user icon"></i>
+      Sign Up
+    </a>
+  </div>
+</div>
 {% endblock %}

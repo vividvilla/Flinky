@@ -1,13 +1,71 @@
 {% extends 'base.html' %}
 {% block title %} Signup {% endblock %}
 {% block content %}
-<h1>Signup</h1>
+<h2 class="ui header">Signup <span class="sub header">or <a href="/login">login here</a></span></h2>
+<div class="ui two column middle aligned relaxed grid basic segment login">
+<div class="column">
+<div class="ui form segment signup">
 <form method="POST" action="{{ url_for('signup') }}">
-    {{ form.csrf_token }} 
-    {{ form.username.label }} : {{ form.username(size=20) }} <span class="error">{{ form.username.errors[0] }}</span><br>
-    {{ form.password.label }} : {{ form.password }}  <span class="error">{{ form.password.errors[0] }}</span><br>
-    {{ form.confirm.label }} : {{ form.confirm }}  <span class="error">{{ form.confirm.errors[0] }}</span><br>
-    {{ form.email.label }} : {{ form.email }}  <span class="error">{{ form.email.errors[0] }}</span><br>
-    <input type="submit" value="Submit">
+    {{ form.csrf_token }}
+        <div class="field">
+	    	<label></label>{{ form.username.label }}</label>
+	    	<div class="ui left labeled icon input">
+	    		{{ form.username(size=20) }}
+	    		<i class="user icon"></i>
+	    	</div>
+    	</div>
+	    <div class="field">
+	    	<label>{{ form.password.label }}</label>
+	    	<div class="ui left labeled icon input">
+	    		{{ form.password }}
+	    		<i class="lock icon"></i>
+	    	</div>
+	    </div>
+	    <div class="field">
+	    	<label>{{ form.confirm.label }}</label>
+	    	<div class="ui left labeled icon input">
+	    		{{ form.confirm }}
+	    		<i class="lock icon"></i>
+	    	</div>
+	    </div>
+	    <div class="field">
+	    	<label>{{ form.email.label }}</label>
+	    	<div class="ui left labeled icon input">
+	    		{{ form.email }}
+	    		<i class="mail icon"></i>
+	    	</div>
+	    </div>
+	<p class="ui red header">*<span class="sub header">All fields are required</span></p>
+    <input type="submit" value="Submit" class="ui blue submit button">
+    {% if form.errors %}
+    <div class="ui red message">
+    <ul class="list">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    </div>
+    {% endif %}
 </form>
+</div>
+</div>
+<div class="ui vertical divider">
+    Or
+  </div>
+  <div class="center aligned column">
+  	<h4>Signup via</h4>
+    <a class="ui large facebook button social-register" href="#">
+      <i class="facebook icon"></i>
+      Facebook
+    </a>
+    <p>or</p>
+    <a class="ui large google plus button social-register" href="#">
+      <i class="google plus icon"></i>
+      Google +
+    </a>
+    <h4>.</h4>
+  </div>
+</div>
 {% endblock %}
