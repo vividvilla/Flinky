@@ -25,10 +25,10 @@ def user_loggedin(f):
         return f(*args, **kwargs)
     return decorated_function
 
-@app.route('/')
-@requires_login
-@user_loggedin
-def index():
-    return None
+# @app.route('/')
+# @requires_login
+# @user_loggedin
+# def index():
+#     return None
 
 import flinky.views

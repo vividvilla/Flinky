@@ -117,3 +117,24 @@ header .ui.grid {
 .social-register {
 	font-weight: 700 !important;
 }
+
+.ui.list .item > .icon.upvote {
+  padding: 0;
+}
+
+.upvote:before {
+  padding: 5px;
+}
+
+.upvote:hover {
+  color: #27ae60;
+}
+
+.links {
+  font-size: 1.2em;
+}
+
+.link-desc {
+  margin-top: 5px;
+  font-size: 0.8em;
+}

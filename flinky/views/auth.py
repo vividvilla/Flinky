@@ -7,6 +7,7 @@ from ..utils import valid_password
 @app.route('/login/', methods = ('GET', 'POST'))
 @user_loggedin
 def login():
+	error = False
 	form = LoginForm()
 	if form.validate_on_submit():
 		password = form.password.data
@@ -18,7 +19,12 @@ def login():
 				session.permanent = form.remember.data
 				flash('You are loggedin', category = "success")
 				return redirect('/')
-	return render_template('login.html', form = form)
+			else:
+				error = True
+		else:
+			error = True
+
+	return render_template('login.html', form = form, error = error)
 
 @app.route('/signup/', methods = ('GET','POST'))
 @user_loggedin
