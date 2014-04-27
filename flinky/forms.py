@@ -27,4 +27,4 @@ class ProfileForm(Form):
 
 class LinkForm(Form):
 	link = StringField('Link', validators = [DataRequired(), URL(message="Enter a valid URL"), link_validation])
-	title = StringField('Title', validators = [Optional()])
+	title = StringField('Title', validators = [Length(min=10,max=140, message = "Title must be 10-140 characters long"), Optional()])

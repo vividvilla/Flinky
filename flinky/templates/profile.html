@@ -2,9 +2,48 @@
 {% block title %} {{ user.username }} profile {% endblock %}
 {% block content %}
 <h1>{{user.username}}'s profile</h1>
-<span>Username : {{ user.username }}</span><br>
-<span>Email : {{ user.email }}</span><br>
-<span>Joined : {{ joined }} ago</span><br>
-<span>Karma : {{ user.karma }}<br>
-<span><a href="/profile/edit/{{ user.username }}">Edit profile</a></span>
+<table class="ui table segment">
+  <tbody>
+    <tr>
+      <td><i class="user icon"></i> Username</td>
+      <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+      <td><i class="email basic icon"></i> Email</td>
+      <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+      <td><i class="add user basic icon"></i> Joined</td>
+      <td>{{ joined }} ago</td>
+    </tr>
+    <tr>
+      <td><i class="fire basic icon"></i> Karma</td>
+      <td>{{ user.karma }}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+    <th colspan="2">
+      <a href="{{ url_for('profile_edit', username = user.username ) }}" class="mini ui red labeled icon button"><i class="user icon"></i> Edit Profile</div>
+    </th>
+  </tr></tfoot>
+</table>
+
+<h2>Your Link's</h2>
+{% if links %}
+{% for link in links %}
+<div class="ui list">
+	<div class="item">
+		<div class="content">
+			<a class="header links" href="{{ link.link }}" target="_blank">{{ link.title }}</a> <span class="description">({{ link.domain }})</span>
+			<div class="description link-desc">{{ link.points }} points &middot; submitted {{ link.submitted | calc_time }} ago {% if session.logged_in == link.user.username %} &middot; 
+			<a href="{{ url_for('delete_link', linkid = link.id, prev = request.path ) }}">delete</a>{% endif %}</div>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% else %}
+<h4>No links submitted yet</h4>
+{% endif %}
+
 {% endblock %}

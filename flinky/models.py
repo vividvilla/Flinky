@@ -33,14 +33,16 @@ class Link(db.Model):
     title = db.Column(db.String(240))
     points = db.Column(db.Integer)
     domain = db.Column(db.String(240))
+    submitted = db.Column(db.DateTime())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref = 'link', uselist=False)
 
-    def __init__(self, link, user, title = None, points = 0, domain = ""):
+    def __init__(self, link, user, title = None, points = 0, domain = "", submitted = datetime.now()):
         self.link = link
         self.title = title
         self.user = user
         self.points = points
+        self.submitted = submitted
 
         if title:
             self.title = title

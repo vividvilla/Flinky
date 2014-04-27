@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h2>Submit Link</h2>
+<div class="ui form segment">
+<form method="POST" action="{{ url_for('submit') }}">
+    {{ form.csrf_token }}
+    <div class="field">
+    	<label></label>{{ form.link.label }}</label>
+    	<div class="ui left labeled icon input">
+    		{{ form.link() }}
+    		<i class="external url icon"></i>
+    	</div>
+    </div>
+    <div class="field">
+    	<label>{{ form.title.label }}</label>
+    	<div class="ui left labeled icon input">
+    		{{ form.title() }}
+    		<i class="pencil icon"></i>
+    	</div>
+    </div>
+	<div class="ui blue small message">
+	  If title not given it will be automaically fetched from the link.
+	</div>    
+    <input type="submit" value="Submit" class="ui blue submit button">
+    {% if form.errors %}
+    <div class="ui red message">
+    <ul class="list">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    </div>
+    {% endif %}
+ </form>
+</div>
+{% endblock %}

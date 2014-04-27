@@ -7,8 +7,9 @@
 	<div class="item">
 		<i class="large up arrow outline icon upvote"></i>
 		<div class="content">
-			<a class="header links" href="{{ link.link }}">{{ link.title }}</a> <span class="description">({{ link.domain }})</span>
-			<div class="description link-desc">{{ link.points }} points - submitted by {{ link.user.username }}</div>
+			<a class="header links" href="{{ link.link }}" target="_blank">{{ link.title }}</a> <span class="description">({{ link.domain }})</span>
+			<div class="description link-desc">{{ link.points }} points &middot; submitted by {{ link.user.username }} {{ link.submitted | calc_time }} ago {% if session.logged_in == link.user.username %} &middot; 
+			<a href="{{ url_for('delete_link', linkid = link.id, prev = request.path ) }}">delete</a>{% endif %}</div>
 		</div>
 	</div>
 </div>

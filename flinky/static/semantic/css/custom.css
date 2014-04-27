@@ -63,6 +63,8 @@ p a {
   font-weight: bold;
 }
 
+/* 
+------------------ **/
 .wrap {
 	max-width: 800px;
 	margin: 0 auto;
@@ -83,7 +85,7 @@ header {
 	height: 80px;
 }
 
-header a {
+header .header-title {
 	text-transform: uppercase;
 }
 
@@ -138,3 +140,7 @@ header .ui.grid {
   margin-top: 5px;
   font-size: 0.8em;
 }
+
+.ui.secondary.pointing.menu.topmenu .menu.right a:hover {
+  background: #f4f4f4 !important;
+  }

@@ -1,7 +1,7 @@
 from flinky import app, user_loggedin, requires_login
 from flask import render_template, session, url_for, redirect, request, flash
 from ..forms import ProfileForm
-from ..models import db, User
+from ..models import db, User, Link
 from ..utils import make_pw_hash, calc_time
 
 @app.route('/profile/')
@@ -10,7 +10,8 @@ from ..utils import make_pw_hash, calc_time
 def profile(username = None):
 	if username:
 		user = User.query.filter_by(username = username).first()
-		return render_template('profile.html', user = user, joined = calc_time(user.joined))
+		links = Link.query.filter_by(user = user).all()
+		return render_template('profile.html', user = user, joined = calc_time(user.joined), links = links)
 	return redirect(url_for('profile', username = session['logged_in']))
 
 @app.route('/profile/edit/<username>/', methods = ['GET', 'POST'])

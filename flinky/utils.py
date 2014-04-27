@@ -28,9 +28,13 @@ def get_title(url):
 	titlecomp = re.compile("<title>(.+?)</title>", re.IGNORECASE|re.DOTALL)
 	title = titlecomp.search(r)
 	if title:
-		return title.group(1).strip()
+		titl = title.group(1).strip()
+		if len(titl) > 140:
+			return titl[:139]
+		return titl
 	return "No title"
 
+@app.template_filter('calc_time')
 def calc_time(date):
 	curr_date = datetime.now()
 	diff = curr_date - date
