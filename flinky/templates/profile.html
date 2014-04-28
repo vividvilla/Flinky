@@ -8,10 +8,12 @@
       <td><i class="user icon"></i> Username</td>
       <td>{{ user.username }}</td>
     </tr>
+    {% if user.username == session.logged_in %}
     <tr>
       <td><i class="email basic icon"></i> Email</td>
       <td>{{ user.email }}</td>
     </tr>
+    {% endif %}
     <tr>
       <td><i class="add user basic icon"></i> Joined</td>
       <td>{{ joined }} ago</td>
@@ -21,14 +23,17 @@
       <td>{{ user.karma }}</td>
     </tr>
   </tbody>
+  {% if user.username == session.logged_in %}
   <tfoot>
     <tr>
     <th colspan="2">
       <a href="{{ url_for('profile_edit', username = user.username ) }}" class="mini ui red labeled icon button"><i class="user icon"></i> Edit Profile</div>
     </th>
   </tr></tfoot>
+      {% endif %}
 </table>
 
+{% if user.username == session.logged_in %}
 <h2>Your Link's</h2>
 {% if links %}
 {% for link in links %}
@@ -44,6 +49,7 @@
 {% endfor %}
 {% else %}
 <h4>No links submitted yet</h4>
+{% endif %}
 {% endif %}
 
 {% endblock %}

@@ -36,3 +36,32 @@ def delete_link(linkid):
 		return redirect(next_url)
 	flash("You are not allowed this action", category = "error")
 	return redirect('/')
+
+@app.route('/link/upvote/<linkid>/')
+@requires_login
+def upvote(linkid):
+	next_url = request.args.get('prev')
+	user = User.query.filter_by(username = session['logged_in']).first()
+	link = Link.query.filter_by(id = linkid).first()
+	if link.user.id == user.id:
+		flash('You cannot upvote your own link', category= "error")
+		return redirect(next_url)
+	if user in link.upvotes:
+		link.upvotes.remove(user)
+		link.points = link.points - 1
+		link.user.karma = link.user.karma - 1
+		db.session.commit()
+		flash("Your vote removed", category = "success")
+		return redirect(next_url)
+	link.upvotes.append(user)
+	link.points = link.points + 1
+	link.user.karma = link.user.karma + 1
+	db.session.commit()
+	flash("Successfully upvoted", category = "success")
+	return redirect(next_url)
+
+@app.template_filter('submitted_by_me')
+def submitted_by_me(upvotes):
+	user = User.query.filter_by(username = session['logged_in']).first()
+	if user in upvotes:
+		return "submitted-by-me"

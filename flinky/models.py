@@ -9,6 +9,11 @@ from flask import session
 
 db = SQLAlchemy(app)
 
+upvotes = db.Table('upvotes',
+    db.Column('link_id', db.Integer, db.ForeignKey('link.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(80), unique = True)
@@ -36,6 +41,7 @@ class Link(db.Model):
     submitted = db.Column(db.DateTime())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref = 'link', uselist=False)
+    upvotes = db.relationship('User', secondary=upvotes, backref=db.backref('upvoted', lazy='dynamic'))
 
     def __init__(self, link, user, title = None, points = 0, domain = "", submitted = datetime.now()):
         self.link = link

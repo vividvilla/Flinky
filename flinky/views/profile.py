@@ -6,13 +6,15 @@ from ..utils import make_pw_hash, calc_time
 
 @app.route('/profile/')
 @app.route('/profile/<username>/')
-@requires_login
 def profile(username = None):
 	if username:
 		user = User.query.filter_by(username = username).first()
 		links = Link.query.filter_by(user = user).all()
 		return render_template('profile.html', user = user, joined = calc_time(user.joined), links = links)
-	return redirect(url_for('profile', username = session['logged_in']))
+
+	if session.get('logged_in'):
+		return redirect(url_for('profile', username = session['logged_in']))
+	return redirect(url_for('login'))
 
 @app.route('/profile/edit/<username>/', methods = ['GET', 'POST'])
 @requires_login
