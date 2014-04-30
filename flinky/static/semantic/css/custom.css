@@ -155,3 +155,13 @@ header .ui.grid {
 .ui.secondary.pointing.menu.topmenu .menu.right a:hover {
   background: #f4f4f4 !important;
   }
+
+.ui.divided.list > .item, 
+.ui.divided.list:not(.horizontal) > .list {
+  border-top: none;
+}
+
+.ui.divided.list:not(.horizontal) .list .item {
+  padding-left: 0; 
+  padding-right: 0; 
+}

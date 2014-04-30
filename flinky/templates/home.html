@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
+<div class="ui tabular filter menu">
+  <a class="active item" data-tab="sumitted">Recently Submitted</a>
+  <a class="item" data-tab="popular">Most Popular</a>
+</div>
+<div class="ui divided inbox selection list active tab" data-tab="sumitted">
 {% if links %}
 {% for link in links %}
 <div class="ui list">
@@ -23,4 +28,30 @@
 {% else %}
 <h4>No links submitted yet</h4>
 {% endif %}
+</div>
+<div class="ui divided inbox selection list active tab" data-tab="popular">
+{% if links %}
+{% for link in links|sort(attribute='points', reverse = True) %}
+<div class="ui list">
+	<div class="item">
+		<div class="ui grid">
+			<div class="left floated one wide column">
+				<a class="upvote {% if session.logged_in %}{{ link.upvotes | submitted_by_me }}{% endif %}" href="{{ url_for('upvote', linkid = link.id, prev = request.path ) }}"><i class="large up arrow outline icon"></i></a>
+			</div>
+			<div class="right floated fifteen wide column">
+				<div class="content">
+					<a class="header links" href="{{ link.link }}" target="_blank">{{ link.title }}</a> <span class="description">({{ link.domain }})</span>
+					<div class="description link-desc">{{ link.points }} points &middot; submitted by {{ link.user.username }} {{ link.submitted | calc_time }} ago {% if session.logged_in == link.user.username %} &middot; 
+					<a href="{{ url_for('delete_link', linkid = link.id, prev = request.path ) }}">delete</a>{% endif %}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% else %}
+<h4>No links submitted yet</h4>
+{% endif %}
+
+</div>
 {% endblock %}

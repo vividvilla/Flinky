@@ -34,22 +34,46 @@
 </table>
 
 {% if user.username == session.logged_in %}
-<h2>Your Link's</h2>
+
+<div class="ui tabular filter menu">
+  <a class="active item" data-tab="sumitted">Recently Submitted</a>
+  <a class="item" data-tab="upvoted">Recently Upvoted</a>
+</div>
+<div class="ui divided inbox selection list active tab" data-tab="sumitted">
 {% if links %}
 {% for link in links %}
 <div class="ui list">
-	<div class="item">
-		<div class="content">
-			<a class="header links" href="{{ link.link }}" target="_blank">{{ link.title }}</a> <span class="description">({{ link.domain }})</span>
-			<div class="description link-desc">{{ link.points }} points &middot; submitted {{ link.submitted | calc_time }} ago {% if session.logged_in == link.user.username %} &middot; 
-			<a href="{{ url_for('delete_link', linkid = link.id, prev = request.path ) }}">delete</a>{% endif %}</div>
-		</div>
-	</div>
+  <div class="item">
+    <div class="content">
+      <a class="header links" href="{{ link.link }}" target="_blank">{{ link.title }}</a> <span class="description">({{ link.domain }})</span>
+      <div class="description link-desc">{{ link.points }} points &middot; submitted {{ link.submitted | calc_time }} ago {% if session.logged_in == link.user.username %} &middot; 
+      <a href="{{ url_for('delete_link', linkid = link.id, prev = request.path ) }}">delete</a>{% endif %}</div>
+    </div>
+  </div>
 </div>
 {% endfor %}
 {% else %}
 <h4>No links submitted yet</h4>
 {% endif %}
-{% endif %}
 
+</div>
+<div class="ui divided inbox selection list tab" data-tab="upvoted">
+{% if user.upvoted %}
+{% for link in user.upvoted | reverse %}
+<div class="ui list">
+  <div class="item">
+    <div class="content">
+      <a class="header links" href="{{ link.link }}" target="_blank">{{ link.title }}</a> <span class="description">({{ link.domain }})</span>
+      <div class="description link-desc">{{ link.points }} points &middot; submitted by {{ link.user.username }} {{ link.submitted | calc_time }} ago {% if session.logged_in == link.user.username %} &middot; 
+      <a href="{{ url_for('delete_link', linkid = link.id, prev = request.path ) }}">delete</a>{% endif %}</div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h4>No links upvoted yet</h4>
+{% endif %}
+</div>
+
+{% endif %}
 {% endblock %}
